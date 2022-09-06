@@ -1,0 +1,42 @@
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<style>
+    
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    
+
+</style>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#complete-btn').click(function(){
+            console.log('button clicked');
+            var user_task_ids = [];
+            $('input[name=boxes]:checked').each(function(){
+                user_task_ids.push($(this).val());
+            })
+            var user_task_data = user_task_ids.join(",");
+            var data = {'user_task_ids': user_task_ids}
+
+            $.ajax({
+                type: 'POST',
+                url: '/user-task-update',
+                data: {'user_task_ids': user_task_data, 'user_task_status': 1}
+            })
+            window.location.href = "/task-list/"
+        })
+    });
+</script>
+
+</html>

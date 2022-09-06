@@ -1,0 +1,70 @@
+{% extends "taskmanapp/base.html" %}
+{% block content %}
+
+    <h3>Task List</h3> <br>
+    <a href="{% url 'activity' %}">  User Activity</a>
+    <br><br>
+
+    <table class="table" style="width: 100%;">
+        <thead>
+            <span><a type="button" href="{% url 'task-create' %}" style=" padding: 20px; " color ="black" style="background-color:#1789E1" >Create_Task</a></span>
+
+            {% csrf_token %}
+            
+
+            <tr>
+                <th scope="col">  </th>
+                <th scope="col">Name</th>
+                <th scope="col">Created</th>
+                <th scope="col">Deadline</th>
+                <th scope="col" colspan="2">Action</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_task in user_tasks %}
+            
+            <tr>
+                <td>
+                    <div>
+                        <input type="checkbox" {% if user_task.status == 1 %}checked{% endif %} value="{{ user_task.id }}" name ="boxes" class="check_box">
+                    </div>
+                    </td>
+                <td>{{ user_task.task_name }}</td>
+                <td>{{ user_task.created }}</td>
+                <td>{{ user_task.deadline }}</td>
+                
+                <td><a type="button" class="btn btn-warning" href="/task-update/{{ user_task.id }}">Update</a></td>
+                <td>   <a type="button" class="btn btn-danger" href="/task-delete/{{ user_task.id }}">Delete</a>
+                </td>
+                <td>{{ user_task.get_status_display }}
+                   
+                    
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+
+
+    <br>
+    <button class="task-button" id="complete-btn" data-id="1">Update task Status</button>
+    <br>
+    <br>
+    <br>
+    <a href="{% url  'logout' %}">Logout</a>
+</div>
+{% endblock %}
+<!-- <script src="jquery-3.6.0.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+<!-- <script type="text/javascript">
+    $(':checkbox').click(function(){
+        $("button").click(function(){
+        $.ajax({
+            type: 'GET',
+            url: '',
+     })    })
+    }) 
+</script> --> -->
+
